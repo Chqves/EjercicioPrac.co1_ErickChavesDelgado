@@ -1,15 +1,55 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Inicio - SalonB</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header class="nav">
+  <div class="inner">
+    <div class="brand"> SalonB</div>
+    <a class="link" th:href="@{/}">Inicio</a>
+    <a class="link" th:href="@{/categorias}">Categorías</a>
+    <a class="link" th:href="@{/servicios}">Servicios</a>
+    <a class="link" th:href="@{/reservas}">Reservas</a>
+    <a class="link" th:href="@{/contacto}">Contacto</a>
+  </div>
+</header>
+
+<main class="container">
+  <div class="grid grid-2">
+    <section class="card">
+      <h1 class="h1">Bienvenidos a SalonB</h1>
+      <p class="p">
+        Un espacio pensado para tu estilo. Reservá tu cita en minutos y descubrí nuestros servicios.
+      </p>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <a class="btn primary" th:href="@{/reservas/nueva}">Reservar cita</a>
+        <a class="btn" th:href="@{/servicios}">Ver servicios</a>
+        <a class="btn success" th:href="@{/contacto}">Contactar</a>
+      </div>
+    </section>
+
+    <aside class="card">
+      <h2 style="margin:0 0 6px;">? Nuevo servicio destacado</h2>
+      <p class="p" th:if="${destacado == null}">
+        Aún no hay servicios registrados. Agregá uno en la sección “Servicios”.
+      </p>
+
+      <div th:if="${destacado != null}">
+        <div class="alert ok">
+          <b th:text="${destacado.nombre}">Servicio</b><br>
+          <span class="p" style="margin:0; display:block;">
+            Precio: ₡<span th:text="${destacado.precio}">0</span>
+          </span>
+        </div>
+        <a class="btn" th:href="@{/servicios}">Administrar servicios</a>
+      </div>
+    </aside>
+  </div>
+</main>
+
+</body>
 </html>
