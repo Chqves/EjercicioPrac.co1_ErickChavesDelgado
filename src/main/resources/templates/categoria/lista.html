@@ -1,33 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Categorías</title>
+  <title>Categorías</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-    <h1>Lista de Categorías</h1>
 
-    <a th:href="@{/categorias/nueva}">Nueva Categoría</a>
+<div class="container">
+  <div class="card">
+
+    <h1 class="h1">Categorías</h1>
+    <p class="p">Administre las categorías del salón (Cabello, Uñas, Barbería, Spa, etc.).</p>
+
+    <div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+    <a class="btn primary" th:href="@{/categorias/nueva}">+ Nueva categoría</a>
     <br><br>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="cat : ${categorias}">
-                <td th:text="${cat.id}"></td>
-                <td th:text="${cat.nombre}"></td>
-                <td>
-                    <a th:href="@{/categorias/editar/{id}(id=${cat.id})}">Editar</a>
-                    |
-                    <a th:href="@{/categorias/eliminar/{id}(id=${cat.id})}">Eliminar</a>
-                </td>
-            </tr>
-        </tbody>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th style="width:180px;">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="c : ${categorias}">
+          <td th:text="${c.id}"></td>
+          <td th:text="${c.nombre}"></td>
+          <td>
+            <a class="btn" th:href="@{/categorias/editar/{id}(id=${c.id})}">Editar</a>
+            <a class="btn danger" th:href="@{/categorias/eliminar/{id}(id=${c.id})}"
+               onclick="return confirm('¿Seguro que desea eliminar esta categoría?');">Eliminar</a>
+          </td>
+        </tr>
+      </tbody>
     </table>
+
+  </div>
+</div>
+
 </body>
 </html>

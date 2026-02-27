@@ -2,6 +2,7 @@ package general.service;
 
 import general.domain.Categoria;
 import general.repository.CategoriaRepository;
+import general.repository.ServicioRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,9 @@ public class CategoriaService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private ServicioRepository servicioRepository;
 
     public List<Categoria> getCategorias() {
         return categoriaRepository.findAll();
@@ -24,7 +28,11 @@ public class CategoriaService {
         categoriaRepository.save(categoria);
     }
 
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if (servicioRepository.countByCategoria_Id(id) > 0) {
+            return false;
+        }
         categoriaRepository.deleteById(id);
+        return true;
     }
 }

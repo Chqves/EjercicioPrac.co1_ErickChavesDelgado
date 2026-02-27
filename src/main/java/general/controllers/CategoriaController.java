@@ -14,38 +14,40 @@ public class CategoriaController {
     @Autowired
     private CategoriaService categoriaService;
 
-    // LISTAR
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("categorias", categoriaService.getCategorias());
         return "categoria/lista";
     }
 
-    // FORM NUEVA
     @GetMapping("/nueva")
     public String nuevaCategoria(Model model) {
         model.addAttribute("categoria", new Categoria());
         return "categoria/form";
     }
 
-    // GUARDAR
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute Categoria categoria) {
         categoriaService.save(categoria);
         return "redirect:/categorias";
     }
 
-    // EDITAR
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         model.addAttribute("categoria", categoriaService.getCategoria(id));
         return "categoria/form";
     }
 
-    // ELIMINAR
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
-        categoriaService.delete(id);
+    public String eliminar(@PathVariable Long id, Model model) {
+        boolean ok = categoriaService.delete(id);
+
+        if (!ok) {
+            model.addAttribute("error", "No se puede eliminar la categoría porque tiene servicios asociados.");
+            model.addAttribute("categorias", categoriaService.getCategorias());
+            return "categoria/lista";
+        }
+
         return "redirect:/categorias";
     }
 }
