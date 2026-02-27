@@ -2,41 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Servicios</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h1>Lista de Servicios</h1>
+<div class="container">
+  <div class="card">
 
-<a th:href="@{/servicios/nuevo}">Nuevo Servicio</a>
-<br><br>
+    <h1 class="h1">Lista de Servicios</h1>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Categoría</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="s : ${servicios}">
-            <td th:text="${s.id}"></td>
-            <td th:text="${s.nombre}"></td>
-            <td th:text="${s.precio}"></td>
-            <td th:text="${s.categoria != null ? s.categoria.nombre : ''}"></td>
-            <td>
-                <a th:href="@{/servicios/editar/{id}(id=${s.id})}">Editar</a> |
-                <a th:href="@{/servicios/eliminar/{id}(id=${s.id})}">Eliminar</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <a class="btn primary" th:href="@{/servicios/nuevo}">+ Nuevo Servicio</a>
+    <br><br>
 
-<br>
-<a th:href="@{/categorias}">Ir a Categorías</a> |
-<a th:href="@{/reservas}">Ir a Reservas</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="s : ${servicios}">
+                <td th:text="${s.id}"></td>
+                <td th:text="${s.nombre}"></td>
+                <td th:text="${s.precio}"></td>
+                <td th:text="${s.categoria != null ? s.categoria.nombre : ''}"></td>
+                <td>
+                    <a class="btn" th:href="@{/servicios/editar/{id}(id=${s.id})}">Editar</a>
+                    <a class="btn danger"
+                       th:href="@{/servicios/eliminar/{id}(id=${s.id})}"
+                       onclick="return confirm('¿Seguro que desea eliminar este servicio?');">
+                       Eliminar
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a class="btn" th:href="@{/categorias}">Categorías</a>
+    <a class="btn" th:href="@{/reservas}">Reservas</a>
+
+  </div>
+</div>
 
 </body>
 </html>

@@ -1,38 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Formulario Reserva</title>
+  <meta charset="UTF-8">
+  <title>Reserva</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h1 th:text="${reserva.id == null} ? 'Nueva Reserva' : 'Editar Reserva'"></h1>
+<header class="nav">
+  <div class="inner">
+    <div class="brand"> SalonB</div>
+    <a class="link" th:href="@{/}">Inicio</a>
+    <a class="link" th:href="@{/reservas}">Reservas</a>
+  </div>
+</header>
 
-<form th:action="@{/reservas/guardar}" th:object="${reserva}" method="post">
-    <input type="hidden" th:field="*{id}" />
+<main class="container">
+  <div class="card">
+    <h1 class="h1" th:text="${reserva.id == null ? 'Nueva Reserva' : 'Editar Reserva'}"></h1>
+    <p class="p">Completá los datos para agendar la cita.</p>
 
-    <label>Nombre del Cliente:</label>
-    <input type="text" th:field="*{nombreCliente}" required />
-    <br><br>
+    <form th:action="@{/reservas/guardar}" th:object="${reserva}" method="post">
 
-    <label>Fecha:</label>
-    <input type="date" th:field="*{fecha}" required />
-    <br><br>
+      <!-- para editar -->
+      <input type="hidden" th:field="*{id}">
 
-    <label>Servicio:</label>
-    <select th:field="*{servicio.id}" required>
-        <option value="">-- Seleccione --</option>
+      <label>Nombre del cliente</label>
+      <input class="input" type="text" th:field="*{nombreCliente}" required placeholder="Ej: Ana Rodríguez">
+
+      <label>Fecha</label>
+      <input class="input" type="date" th:field="*{fecha}" required>
+
+      <label>Servicio</label>
+      <select class="input" th:field="*{servicio}" required>
+        <option value="" disabled selected>-- Seleccione un servicio --</option>
         <option th:each="s : ${servicios}"
-                th:value="${s.id}"
+                th:value="${s}"
                 th:text="${s.nombre}">
         </option>
-    </select>
+      </select>
 
-    <br><br>
-    <button type="submit">Guardar</button>
-</form>
+      <br>
+      <button class="btn primary" type="submit">Guardar</button>
+      <a class="btn" th:href="@{/reservas}">Cancelar</a>
+    </form>
 
-<br>
-<a th:href="@{/reservas}">Volver</a>
+  </div>
+</main>
 
 </body>
 </html>
