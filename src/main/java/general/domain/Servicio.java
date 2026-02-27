@@ -6,10 +6,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
-@Table(name = "categoria")
-public class Categoria {
+@Table(name = "servicio")
+public class Servicio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +21,14 @@ public class Categoria {
     @Column(name = "nombre")
     private String nombre;
 
-    public Categoria() {
+    @Column(name = "precio")
+    private Double precio;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
+    public Servicio() {
     }
 
     public Long getId() {
@@ -36,5 +45,21 @@ public class Categoria {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
